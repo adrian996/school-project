@@ -1,0 +1,117 @@
+<body id="page-top">
+  <div id="wrapper">
+    <div class="d-flex flex-column" id="content-wrapper">
+      <div id="content">
+        <div class="container-fluid">
+          <h2 class="text-dark mb-4" style="padding-top: 25px;">Courses</h2>
+          <div class="card shadow">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 font-weight-bold">Course list</p>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="text-md-right dataTables_filter" id="dataTable_filter">
+                    <input type="text" class="form-control form-control-sm" placeholder="Search for name" [(ngModel)]="courseName" (keyup)="getByName()"/>
+                    <label></label>
+                  </div>
+                </div>
+                <div *ngIf="this.isAdmin()" class="col-lg-6 offset-lg-0">
+                  <a class="btn btn-outline-danger btn-icon-split" role="button">
+                    <span class="text-red-50 icon">
+                      <i class="fas fa-trash"></i>
+                    </span>
+                    <span class="text-black text" (click)="deleteAllCourses()">Delete all</span>
+                  </a>
+                  <a class="btn btn-outline-success btn-icon-split" role="button" style="margin-left: 1%;">
+                    <span class="text-green-50 icon">
+                      <i class="fas fa-plus"></i>
+                    </span>
+                    <span class="text-black text" (click)="openDialog(coursedialog, course)">Create new course</span>
+                  </a>
+
+                </div>
+              </div>
+              <div class=" table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+
+                <table class="table my-0" id="dataTable">
+                  <thead>
+                    <tr>
+                      <th>Name <img (click)="sortByName()" src="assets/img/sort.png"></th>
+                      <th>Description <img (click)="sortByDescription()" src="assets/img/sort.png"></th>
+                      <th>Points <img src="assets/img/sort.png" (click)="sortByPoints()"></th>
+                      <th style="width: 20px;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let course of courses | paginate: { itemsPerPage: 6, currentPage: p }">
+                      <td>{{ course.name }}</td>
+                      <td>{{ course.description }}</td>
+                      <td>{{ course.points }}</td>
+                      <td>
+                        <button *ngIf="this.isStudent()" class="btn btn-primary" type="button" (click)="addCourseToStudent(this.studentId, course.id)">Enroll</button>
+                        <div class="btn-group">
+                          <button *ngIf="this.isAdmin() || this.isTeacher()" class="btn btn-primary" type="button" routerLink="course-info/{{course.id}}">View</button>
+                          <button *ngIf="this.isAdmin() || this.isTeacher()" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false" type="button"></button>
+                          <div class="dropdown-menu">
+                            <a class="dropdown-item" (click)="deleteCourse(course.id)">Delete</a>
+                            <a class="dropdown-item" (click)="openDialog(coursedialog, course)">Edit</a>
+                            <a class="dropdown-item" routerLink="events-list/{{course.id}}">Schedule</a>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>
+                        <strong>Name</strong>
+                      </td>
+                      <td>
+                        <strong>Description</strong>
+                      </td>
+                      <td>
+                        <strong>Points</strong>
+                      </td>
+                      <td></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+              <pagination-controls (pageChange)="p = $event" autoHide="true"></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+</body>
+
+
+<ng-template #coursedialog>
+<form class="user">
+  <div class="form-group row">
+    <div style="padding: 5%">
+      <h2 class="text-dark" style="padding-top: 3%">{{!course.id ? "Create course" : "Edit Course"}}</h2>
+      <input class="form-control" type="text" id="courseName" placeholder="Name" name="courseName" value={{course.name}} [(ngModel)]="course.name" style="margin-bottom: 5%;">
+      <input class="form-control" type="text" id="description" placeholder="Description" name="description" value={{course.description}} [(ngModel)]="course.description" style="margin-bottom: 5%">
+      <input class="form-control" type="number" id="points" placeholder="Points" name="points" value={{course.points}} [(ngModel)]="course.points" style="margin-bottom: 5%;">
+      <button class="btn btn-primary btn-block text-white btn-user" type="submit" (click)="editCourse()" *ngIf="course.id">Edit Course</button>
+      <button class="btn btn-primary btn-block text-white btn-user" type="submit" (click)="saveCourse()" *ngIf="!course.id">Create Course</button>
+      <!-- <img src="assets/img/book-icon-open-illustration-vector-103113738.jpg" style="width: 250px;"> -->
+    </div>
+    <!-- <div style="padding: 5%">
+      <h2 class="text-dark" style="padding-top: 3%">Create new course</h2>
+      <input class="form-control" type="text" id="courseName" placeholder="Name" name="courseName" value={{course.name}} [(ngModel)]="course.name" style="margin-bottom: 5%;">
+      <input class="form-control" type="text" id="description" placeholder="Description" name="description" [(ngModel)]="course.description" style="margin-bottom: 5%">
+      <input class="form-control" type="email" id="points" placeholder="Points" name="points" [(ngModel)]="course.points" style="margin-bottom: 5%;">
+      <button class="btn btn-primary btn-block text-white btn-user" type="submit" (click)="saveCourse()">Create Course</button>
+    </div> -->
+
+  </div>
+</form>
+</ng-template>

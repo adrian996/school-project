@@ -1,0 +1,52 @@
+  <div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+        <div class="container-fluid">
+            <h2 class="text-dark mb-4" style="padding-top: 25px;">Schedule</h2>
+            <div class="card shadow">
+                <div class="card-header py-3">
+                  <p class="text-primary m-0 font-weight-bold">Event List</p>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item" role="presentation"><a class="nav-link active" role="tab" data-toggle="tab" (click)="changeDay('MONDAY')" href="">Monday</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" (click)="changeDay('TUESDAY')" href="">Tuesday</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" (click)="changeDay('WEDNESDAY')" href="">Wednesday</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" (click)="changeDay('THURSDAY')" href="">Thursday</a></li>
+                            <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab" (click)="changeDay('FRIDAY')" href="">Friday</a></li>
+                        </ul>
+                        <label></label>
+                    </div>
+                    <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                        <table class="table my-0" id="dataTable">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Venue</th>
+                                    <th><strong></strong></th>
+                                    <!-- <th style="width: 15px;"></th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let event of events">
+                                  <ng-container *ngIf="event.date.dow == this.selectedDay">
+                                    <td>{{ event.date.startTime | slice:0:5}} - {{ event.date.endTime | slice:0:5}}</td>
+                                    <td>{{ event.venue }}</td>
+                                    <td><strong></strong></td>
+                                  </ng-container>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Time</strong></td>
+                                    <td><strong>Venue</strong></td>
+                                    <td><strong></strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

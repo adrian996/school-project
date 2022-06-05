@@ -1,0 +1,43 @@
+<body class="bg-gradient-primary">
+  <div>
+      <div class="row justify-content-center">
+          <div class="col-md-9 col-lg-12 col-xl-9">
+              <div class="card shadow-lg o-hidden border-0 my-5">
+                  <div class="card-body p-0">
+                      <div class="row">
+                          <div class="col-lg-6 d-none d-lg-flex">
+                              <div class="flex-grow-1 bg-login-image" style="background-image: url(&quot;https://wallpaperaccess.com/full/6592949.jpg&quot;);"></div>
+                          </div>
+                          <div class="col-lg-6">
+                              <div class="p-5">
+                                  <div class="text-center">
+                                      <h4 class="text-dark mb-4">Welcome Back!</h4>
+                                  </div>
+                                  <span>
+                                    <div class="alert text-center" *ngIf="!isLoginFailed">Enter your details</div>
+                                    <div class="alert alert-danger" role="alert" *ngIf="isLoginFailed">Login failed. Try again</div>
+                                  </span>
+                                  <form class="user">
+                                      <div class="form-group"><input class="form-control form-control-user" [(ngModel)]="form.username" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Username..." name="email"></div>
+                                      <div class="form-group"><input class="form-control form-control-user" [(ngModel)]="form.password" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
+                                      <div class="form-group">
+                                          <div class="custom-control custom-checkbox small">
+                                              <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
+                                          </div>
+                                      </div><button class="btn btn-primary btn-block text-white btn-user" (click)=onSubmit() type="submit">Login</button>
+                                      <hr>
+                                  </form>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+<!--
+  <script src="assets/js/jquery.min.js"></script>
+  <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+  <!-- <script src="assets/js/theme.js"></script> -->

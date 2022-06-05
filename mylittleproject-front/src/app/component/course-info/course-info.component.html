@@ -1,0 +1,34 @@
+<div class="container">
+  <body>
+    <div class="container">
+        <h1 class="p-3 font-weight-light">{{ currentCourse.name }}</h1>
+        <h1 class="p-3 font-weight-light">{{ currentCourse.points }} EAP | {{ currentCourse.description }}</h1>
+        <div class="table-responsive table-striped">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th id="butcol"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let student of courseStudents, let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ student.firstName }} {{ student.lastName }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.phoneNumber }}</td>
+                    <td class="text-center"></td>
+                  </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+
+</div>
+
+
+

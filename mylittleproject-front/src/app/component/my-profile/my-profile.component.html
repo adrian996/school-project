@@ -1,0 +1,236 @@
+<div id="wrapper">
+
+  <div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+      <div class="container-fluid">
+        <h1 *ngIf="isStudent()" class="text-dark mb-5 mt-4 ml-2" style="padding-top: 25px;">Student Profile</h1>
+        <h1 *ngIf="isTeacher()" class="text-dark mb-5 mt-4 ml-2" style="padding-top: 25px;">Teacher Profile</h1>
+        <div class="row mb-3">
+          <div class="col-lg-3">
+            <div class="card">
+              <div *ngIf="isTeacher()" class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-3"
+                  src={{this.teacher.profilePic}} width="180" height="185"/>
+                <div class="mb-3">
+                  <button *ngIf="!this.toggle" class="btn btn-primary btn-sm" type="button" (click)="this.toggle = !this.toggle">Change Photo</button>
+                  <input style="height: 31px;" *ngIf="this.toggle" type="text"
+                            value= {{this.teacher.profilePic}}
+                            [(ngModel)]="this.teacher.profilePic" id="profilePic" name="profilePic"/>
+                </div>
+              </div>
+              <div *ngIf="isStudent()" class="card-body text-center shadow"><img class="rounded-circle mb-3 mt-3"
+                src={{this.student.profilePic}} width="180" height="185" />
+              <div class="mb-3">
+                <button *ngIf="!this.toggle" class="btn btn-primary btn-sm" type="button" (click)="this.toggle = !this.toggle">Change Photo</button>
+                  <input style="height: 31px;" *ngIf="this.toggle" type="text"
+                            value= {{this.student.profilePic}}
+                            [(ngModel)]="this.student.profilePic" id="profilePic" name="profilePic"/>
+              </div>
+            </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-9">
+            <div>
+              <div class="card shadow mb-3">
+                <div class="card-header py-3">
+                  <p class="text-primary m-0 font-weight-bold">User Settings</p>
+                </div>
+                <div class="card-body">
+                  <form>
+                    <div class="form-row">
+                      <div class="col">
+                        <div *ngIf="isStudent()" class="form-group"><label><strong>First Name</strong></label><input type="text"
+                            class="form-control" value= {{this.student.firstName}}
+                            [(ngModel)]="this.student.firstName" id="first_name-1" name="first_name"/>
+                        </div>
+                        <div *ngIf="isTeacher()" class="form-group"><label><strong>First Name</strong></label><input type="text"
+                          class="form-control" value= {{this.teacher.firstName}}
+                          [(ngModel)]="this.teacher.firstName" id="first_name-1" name="first_name"/>
+                      </div>
+                      </div>
+                      <div class="col">
+                        <div *ngIf="isStudent()" class="form-group"><label><strong>Last Name</strong></label><input type="text"
+                            class="form-control" id="last_name-1" value={{this.student.lastName}}
+                            [(ngModel)]="student.lastName" name="last_name" />
+                        </div>
+                        <div *ngIf="isTeacher()" class="form-group"><label><strong>Last Name</strong></label><input type="text"
+                          class="form-control" id="last_name-1" value={{this.teacher.lastName}}
+                          [(ngModel)]="teacher.lastName" name="last_name" />
+                      </div>
+                      </div>
+                    </div>
+                    <div class="form-row">
+                      <div class="col">
+                        <div *ngIf="isStudent()" class="form-group"><label><strong>Phone Number</strong></label><input type="number" id="phone_number-1"
+                            value={{this.student.phoneNumber}} [(ngModel)]="student.phoneNumber" name="phoneNumber" class="form-control" />
+                        </div>
+                        <div *ngIf="isTeacher()" class="form-group"><label><strong>Phone Number</strong></label><input type="number" id="phone_number-1"
+                          value={{this.teacher.phoneNumber}} [(ngModel)]="teacher.phoneNumber" name="phoneNumber" class="form-control" />
+                      </div>
+                      </div>
+                      <div class="col">
+                        <div *ngIf="isStudent()" class="form-group"><label><strong>Email Address</strong></label><input type="email"
+                            class="form-control" disabled="true" id="email-1" value={{this.student.email}} [(ngModel)]="student.email" name="email" />
+                        </div>
+                        <div *ngIf="isTeacher()" class="form-group"><label><strong>Email Address</strong></label><input type="email"
+                          class="form-control" disabled="true" id="email-1" value={{this.teacher.email}} [(ngModel)]="teacher.email" name="email" />
+                      </div>
+                      </div>
+                    </div>
+                    <div *ngIf="isStudent()" class="form-group"><button class="btn btn-primary btn-sm" (click)="editStudent()" type="submit">Save Settings</button></div>
+                    <div *ngIf="isTeacher()" class="form-group"><button class="btn btn-primary btn-sm" (click)="editTeacher()" type="submit">Save Settings</button></div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding-left: 2%; padding-right: 2%;">
+        <div *ngIf="isStudent()" class="card" id="courses">
+          <div role="tab" class="card-header">
+            <h2 class="text-dark mb-4" style="padding-top: 25px;">My courses</h2>
+          </div>
+          <div role="tabpanel" data-parent="#accordion-1" class="collapse show item-1">
+            <div class="card-body">
+              <div class="table-responsive table-sm">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Points</th>
+                      <th id="butcol"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let course of studentCourses, let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ course.name }}</td>
+                      <td>{{ course.description }}</td>
+                      <td>{{ course.points }}</td>
+                      <td class="text-center">
+                        <button class="btn btn-outline-danger btn-sm" type="button"
+                          (click)="deleteCourse(this.studentId, course.id)">X</button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <button class="btn btn-info btn-sm" (click)="download('courses')">Download as PDF</button>
+            </div>
+
+              <!-- <div *ngIf="this.studentCourses.length == 0">
+                <h3>No courses! Add some..</h3>
+              </div> -->
+            <!-- <div *ngIf="this.studentCourses.length == 0">
+              <h3>No courses! Add some..</h3>
+            </div> -->
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="d-flex flex-column" id="content-wrapper">
+          <div id="content">
+            <div class="container-fluid" >
+              <h1 class="text-dark mb-4">Schedule</h1>
+              <div class="card shadow">
+                <div class="card-header py-3">
+                  <h4 *ngIf="isTeacher()" class="text-primary mb-4">Teaching: {{ teacher.course.name }}</h4>
+                  <p class="text-primary m-0 font-weight-bold">Event List</p>
+                </div>
+                <div class="card-body" id="events">
+                  <div>
+                    <ul class="nav nav-tabs" role="tablist">
+                      <li class="nav-item" role="presentation"><a class="nav-link active" role="tab"
+                          data-toggle="tab" (click)="changeDay('MONDAY')" href="">Monday</a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab"
+                          (click)="changeDay('TUESDAY')" href="">Tuesday</a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab"
+                          (click)="changeDay('WEDNESDAY')" href="">Wednesday</a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab"
+                          (click)="changeDay('THURSDAY')" href="">Thursday</a></li>
+                      <li class="nav-item" role="presentation"><a class="nav-link" role="tab" data-toggle="tab"
+                          (click)="changeDay('FRIDAY')" href="">Friday</a></li>
+                    </ul>
+                    <label></label>
+                  </div>
+                  <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                    aria-describedby="dataTable_info">
+                    <table class="table my-0" id="dataTable">
+                      <thead>
+                        <tr>
+                          <th>Time</th>
+                          <th>Course</th>
+                          <th>Venue</th>
+                          <th id="butcol"></th>
+                          <!-- <th style="width: 15px;"></th> -->
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let event of events">
+                          <ng-container *ngIf="event.date.dow == this.selectedDay">
+                            <td>{{ event.date.startTime | slice:0:5}} - {{ event.date.endTime | slice:0:5}}</td>
+                            <td>{{ event.course.name }}</td>
+                            <td>{{ event.venue }}</td>
+                            <td *ngIf="this.isAdmin()" class="text-center">
+                              <button class="btn btn-outline-danger btn-sm" type="button" (click)="deleteEvent(event.id)">Delete event</button>
+                            </td>
+                          </ng-container>
+                        </tr>
+                      </tbody>
+                      <tfoot>
+                        <tr>
+                          <td><strong>Time</strong></td>
+                          <td><strong>Course</strong></td>
+                          <td><strong>Venue</strong></td>
+                          <td></td>
+                        </tr>
+                      </tfoot>
+                    </table>
+                  </div>
+
+                  <button class="btn btn-info btn-sm" (click)="download('events')">Download as PDF</button>
+                  <button *ngIf="isTeacher()" class="btn btn-info btn-sm ml-2" (click)="openDialog(eventdialog)">Create event</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<ng-template #eventdialog>
+  <form class="event">
+    <div class="form-group">
+      <div style="padding: 5%">
+        <!-- <select name="dayValue" [(ngModel)]="dayValue" class="form-control">
+          <option (click)="this.selectedDay = 'MONDAY'">Monday</option>
+          <option (click)="this.selectedDay = 'TUESDAY'">Tuesday</option>
+          <option (click)="this.selectedDay = 'WEDNESDAY'">Wednesday</option>
+          <option (click)="this.selectedDay = 'THURSDAY'">Thursday</option>
+          <option (click)="this.selectedDay = 'FRIDAY'">Friday</option>
+        </select> -->
+        <select style="margin-top: 5%" name="timeValue" [(ngModel)]="timeValue" class="form-control">
+          <option [ngValue]="undefined" disabled  selected> Select time </option>
+            <option *ngFor="let date of dates" [value]="date.id">{{ date.dow }} {{date.startTime | slice:0:5}} - {{ date.endTime | slice:0:5}}</option>
+            <!-- CYCLE THROUGH DATES HERE -->
+        </select>
+        <input class="form-control" type="text" [(ngModel)]="venueValue" id="venue" placeholder="Venue" name="venue" style="margin-top: 5%; margin-bottom: 5%">
+        <button [disabled]="!venueValue" class="btn btn-primary btn-block text-white btn-user" type="submit" (click)="createEvent()">Create event</button>
+        <!-- <img src="assets/img/book-icon-open-illustration-vector-103113738.jpg" style="width: 250px;"> -->
+      </div>
+
+    </div>
+  </form>
+  </ng-template>

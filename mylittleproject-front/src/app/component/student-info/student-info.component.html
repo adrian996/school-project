@@ -1,0 +1,41 @@
+
+<div class="container">
+
+  <body>
+    <div class="container">
+      <h1 class="p-3 font-weight-light">{{ currentStudent.firstName }} {{currentStudent.lastName}}</h1>
+      <h2 class="p-3 font-weight-light">{{ currentStudent.email }} | {{ currentStudent.phoneNumber }}</h2>
+
+      <div *ngIf="this.studentCourses.length > 0" class="table-responsive table-striped">
+        <h1 class="text-left p-3 font-weight-light">Courses</h1>
+          <table class="table table-hover">
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Description</th>
+                      <th>Points</th>
+                      <th id="butcol"></th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let course of studentCourses, let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ course.name }}</td>
+                  <td>{{ course.description }}</td>
+                  <td>{{ course.points }}</td>
+                  <td class="text-center">
+
+                  </td>
+                </tr>
+              </tbody>
+          </table>
+        </div>
+
+        <div *ngIf="this.studentCourses.length == 0">
+          <h3>No courses! Add some..</h3>
+        </div>
+    </div>
+</body>
+
+</div>

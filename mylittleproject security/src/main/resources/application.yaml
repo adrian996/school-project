@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    username: root
+    url: jdbc:mysql://localhost:3306/mylittleprojectDB
+    password: password
+    #initialization-mode: always
+    data: classpath:data.sql
+  jpa:
+    generate-ddl: 'true'
+    properties:
+      hibernate-dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+    ddl-auto: update
+    show-sql: 'true'
+
+
+#First create tables without initializing data, then rerun with ddl-auto set to update and initialization of data script

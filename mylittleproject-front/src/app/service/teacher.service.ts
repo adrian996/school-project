@@ -1,0 +1,46 @@
+import { Teacher } from './../model/teacher.model';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+
+const baseUrl = 'http://localhost:8080/api/teachers'
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TeacherService {
+
+  constructor(private http: HttpClient) { }
+
+  getAll(): Observable<Teacher[]> {
+    return this.http.get<Teacher[]>(baseUrl);
+  }
+
+  get(id: any): Observable<Teacher> {
+    return this.http.get(`${baseUrl}/${id}`);
+  }
+
+  getByEmail(email: string): Observable<Teacher> {
+    return this.http.get<Teacher>(`${baseUrl}/findteacher?email=${email}`);
+  }
+
+  create(data: any): Observable<any> {
+    return this.http.post(baseUrl, data);
+  }
+
+  update(id: any, data: any): Observable<any> {
+    return this.http.put(`${baseUrl}/${id}`, data);
+  }
+
+  delete(id: any): Observable<any> {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
+
+  deleteAll(): Observable<any> {
+    return this.http.delete(baseUrl);
+  }
+
+  getByLastName(lastName: string): Observable<Teacher[]> {
+    return this.http.get<Teacher[]>(`${baseUrl}?lastName=${lastName}`);
+  }
+}
